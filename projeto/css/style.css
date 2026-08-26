@@ -618,7 +618,11 @@ section:not(#hero) {
 .code-body {
   overflow-x: auto;
   padding: 0;
-}
+  margin-left: 3rem;
+  white-space: pre-wrap; /* Permite quebra de linha */
+  text-align: left; /* Justifica o texto à esquerda */
+  font-family: monospace; /* Fonte padrão para código */
+  }
 
 .code-table {
   width: 100%;

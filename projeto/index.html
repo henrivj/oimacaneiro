@@ -224,9 +224,51 @@
           </button>
         </div>
         <div class="code-body" id="code-body-1">
-          <div class="code-placeholder">
-            &#8987; O código final do Desafio 01 será inserido aqui.
-          </div>
+const int pinoPIR = 2;
+const int pinoLDR = A0;
+const int pinoLED = 8;
+
+int limiteLuz = 500;
+
+void setup() {
+
+  pinMode(pinoPIR, INPUT);
+  pinMode(pinoLED, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  int movimento = digitalRead(pinoPIR);
+  int luminosidade = analogRead(pinoLDR);
+
+  bool escuro = luminosidade < limiteLuz;
+
+  if (movimento == HIGH && escuro) {
+
+    digitalWrite(pinoLED, HIGH);
+
+    Serial.println("Presenca detectada - ambiente escuro - LED LIGADO");
+  }
+  else {
+
+    digitalWrite(pinoLED, LOW);
+
+    Serial.println("LED DESLIGADO");
+  }
+
+  Serial.print("Movimento: ");
+  Serial.print(movimento);
+
+  Serial.print(" | Luminosidade: ");
+  Serial.print(luminosidade);
+
+  Serial.print(" | Limite: ");
+  Serial.println(limiteLuz);
+
+  delay(500);
+}
         </div>
       </div>
 
@@ -384,9 +426,67 @@
           </button>
         </div>
         <div class="code-body" id="code-body-2">
-          <div class="code-placeholder">
-            &#8987; O código final do Desafio 02 será inserido aqui.
-          </div>
+const byte LED = 13;
+const byte PING = 7;
+const byte AJUSTE = A0;
+
+float medirDistancia() {
+
+  pinMode(PING, OUTPUT);
+
+  digitalWrite(PING, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(PING, HIGH);
+  delayMicroseconds(5);
+
+  digitalWrite(PING, LOW);
+
+  pinMode(PING, INPUT);
+
+  return pulseIn(PING, HIGH) / 58.0;
+}
+
+void setup() {
+  pinMode(LED, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  int limite = map(analogRead(AJUSTE), 0, 1023, 20, 70);
+  float distancia = medirDistancia();
+
+  Serial.print("Leitura = ");
+  Serial.print(distancia);
+  Serial.print("cm | Configurado = ");
+  Serial.print(limite);
+  Serial.println("cm");
+
+  if (distancia >= limite) {
+
+    digitalWrite(LED, LOW);
+    Serial.println("STATUS: LIVRE");
+
+  } 
+  else if (distancia >= limite * 0.45) {
+
+    digitalWrite(LED, HIGH);
+    delay(180);
+
+    digitalWrite(LED, LOW);
+    delay(180);
+
+    Serial.println("STATUS: ATENCAO");
+
+  } 
+  else {
+
+    digitalWrite(LED, HIGH);
+    Serial.println("STATUS: PARE");
+
+  }
+}
         </div>
       </div>
 
@@ -571,9 +671,88 @@
           </button>
         </div>
         <div class="code-body" id="code-body-3">
-          <div class="code-placeholder">
-            &#8987; O código final do Desafio 03 será inserido aqui.
-          </div>
+// Pinos dos LEDs
+const int LED_VERDE = 8;
+const int LED_VERMELHO = 9;
+const int LED_AMARELO = 10;
+
+// Pinos dos sensores
+const int SENSOR_TEMP = A0;
+const int SENSOR_UMIDADE = A1;
+
+// Valores de referência
+const float LIMITE_TEMP = 30.0;
+const int LIMITE_UMIDADE = 40;
+
+void setup() {
+
+  pinMode(LED_VERDE, OUTPUT);
+  pinMode(LED_VERMELHO, OUTPUT);
+  pinMode(LED_AMARELO, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  // Leitura dos sensores
+  int leituraTemp = analogRead(SENSOR_TEMP);
+  int leituraUmidade = analogRead(SENSOR_UMIDADE);
+
+  // Conversão da leitura do TMP para temperatura
+  float temperatura = (leituraTemp * 5.0 / 1023.0 - 0.5) * 100.0;
+
+  // Conversão da leitura do sensor de umidade para porcentagem
+  int umidade = map(leituraUmidade, 0, 1023, 0, 100);
+
+  // Verifica as condições
+  bool temperaturaAlta = temperatura > LIMITE_TEMP;
+  bool umidadeBaixa = umidade < LIMITE_UMIDADE;
+
+  // Primeiro desligamos todos os LEDs
+  digitalWrite(LED_VERDE, LOW);
+  digitalWrite(LED_VERMELHO, LOW);
+  digitalWrite(LED_AMARELO, LOW);
+
+  // Temperatura alta
+  if (temperaturaAlta) {
+    digitalWrite(LED_VERMELHO, HIGH);
+  }
+
+  // Umidade baixa
+  if (umidadeBaixa) {
+    digitalWrite(LED_AMARELO, HIGH);
+  }
+
+  // Condição normal
+  if (!temperaturaAlta && !umidadeBaixa) {
+    digitalWrite(LED_VERDE, HIGH);
+  }
+
+  // Monitor Serial
+  Serial.print("Temperatura: ");
+  Serial.print(temperatura);
+  Serial.print(" C | Umidade: ");
+  Serial.print(umidade);
+  Serial.println("%");
+
+  if (temperaturaAlta && umidadeBaixa) {
+    Serial.println("ALERTA: Temperatura alta + Umidade baixa!");
+  }
+  else if (temperaturaAlta) {
+    Serial.println("ALERTA: Temperatura acima do limite!");
+  }
+  else if (umidadeBaixa) {
+    Serial.println("ALERTA: Umidade abaixo do limite!");
+  }
+  else {
+    Serial.println("AMBIENTE NORMAL");
+  }
+
+  Serial.println("-----------------------------");
+
+  delay(1000);
+}
         </div>
       </div>
 
