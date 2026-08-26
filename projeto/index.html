@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Centro de Controle Arduino — Experimentos práticos com sensores, lógica e automação em três desafios progressivos." />
+  <title>Centro de Controle Arduino</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+  <!-- =============================================
+       NAVBAR
+       ============================================= -->
+  <nav class="navbar" role="navigation" aria-label="Navegação principal">
+    <a href="#hero" class="nav-brand">
+      <div class="nav-logo" aria-hidden="true">⚡</div>
+      <span class="nav-title">Arduino Control</span>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#hero">Início</a></li>
+      <li><a href="#desafio1">Desafio 01</a></li>
+      <li><a href="#desafio2">Desafio 02</a></li>
+      <li><a href="#desafio3">Desafio 03</a></li>
+      <li><a href="#visao-geral">Visão Geral</a></li>
+    </ul>
+
+    <button
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+      aria-controls="nav-mobile"
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Menu mobile -->
+  <div id="nav-mobile" class="nav-mobile" role="menu">
+    <a href="#hero" role="menuitem">Início</a>
+    <a href="#desafio1" role="menuitem">Desafio 01 — Iluminação</a>
+    <a href="#desafio2" role="menuitem">Desafio 02 — Distância</a>
+    <a href="#desafio3" role="menuitem">Desafio 03 — Ambiente</a>
+    <a href="#visao-geral" role="menuitem">Visão Geral</a>
+  </div>
+
+
+  <!-- =============================================
+       HERO
+       ============================================= -->
+  <section id="hero" aria-labelledby="hero-title">
+
+    <div class="hero-badge" aria-label="Sistema ativo">
+      <span class="dot" aria-hidden="true"></span>
+      Sistema Ativo
+    </div>
+
+    <h1 class="hero-title" id="hero-title">
+      CENTRO DE CONTROLE<br><span class="accent">ARDUINO</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Experimentos práticos com sensores, lógica e automação.
+    </p>
+
+    <div class="hero-stats" role="list" aria-label="Estatísticas do projeto">
+      <div class="stat-card" role="listitem">
+        <div class="stat-num">03</div>
+        <div class="stat-label">Desafios</div>
+      </div>
+      <div class="stat-card" role="listitem">
+        <div class="stat-num">06<span style="font-size:20px;color:var(--text-muted)">+</span></div>
+        <div class="stat-label">Componentes</div>
+      </div>
+      <div class="stat-card" role="listitem">
+        <div class="stat-num">01</div>
+        <div class="stat-label">Projeto</div>
+      </div>
+    </div>
+
+    <a href="#desafio1" class="btn-primary" id="btn-explorar" aria-label="Explorar os desafios">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <polyline points="19 12 12 19 5 12"/>
+      </svg>
+      Explorar desafios
+    </a>
+
+  </section>
+
+  <div class="divider" role="separator"></div>
+
+
+  <!-- =============================================
+       DESAFIO 01 — ILUMINAÇÃO INTELIGENTE
+       ============================================= -->
+  <section id="desafio1" aria-labelledby="d1-title">
+    <div class="container">
+
+      <div class="challenge-header reveal">
+        <div class="challenge-num" aria-hidden="true">01</div>
+        <div class="challenge-meta">
+          <div class="section-label">Desafio 01</div>
+          <h2 class="section-title" id="d1-title">Iluminação Inteligente</h2>
+          <p class="section-desc">
+            O sistema utiliza um sensor PIR para detectar movimento e um LDR para identificar a luminosidade.
+            O LED é acionado quando existe presença em um ambiente escuro.
+          </p>
+        </div>
+      </div>
+
+      <div class="challenge-grid mb-28">
+
+        <!-- Fluxo -->
+        <div class="reveal reveal-delay-1">
+          <div class="section-label mb-12">Fluxo</div>
+          <div class="flow-diagram" role="img" aria-label="Fluxo do sistema: PIR e LDR conectados ao Arduino que controla o LED">
+
+            <div style="display:flex; gap:32px; align-items:flex-start; width:100%;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+                <div class="flow-node sensor">📡 PIR</div>
+                <div class="flow-arrow" aria-hidden="true">↓</div>
+                <div class="flow-node process">Movimento</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+                <div class="flow-node sensor">☀️ LDR</div>
+                <div class="flow-arrow" aria-hidden="true">↓</div>
+                <div class="flow-node process">Luminosidade</div>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:12px;padding:4px 0;">
+              <div style="flex:1;height:1px;background:var(--border);"></div>
+              <span style="font-size:14px;color:var(--text-muted);">+</span>
+              <div style="flex:1;height:1px;background:var(--border);"></div>
+            </div>
+
+            <div class="flow-arrow" aria-hidden="true" style="align-self:center;">↓</div>
+            <div class="flow-node sensor" style="align-self:center;">🔲 Arduino</div>
+            <div class="flow-arrow" aria-hidden="true" style="align-self:center;">↓</div>
+            <div class="flow-node device" style="align-self:center;">💡 LED</div>
+
+          </div>
+        </div>
+
+        <!-- Componentes -->
+        <div class="reveal reveal-delay-2">
+          <div class="section-label mb-12">Componentes</div>
+          <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+              <span style="font-size:20px;" aria-hidden="true">📡</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">Sensor PIR</div>
+                <div style="font-size:12px;color:var(--text-muted);">Detecção de movimento</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+              <span style="font-size:20px;" aria-hidden="true">☀️</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">Sensor LDR</div>
+                <div style="font-size:12px;color:var(--text-muted);">Medição de luminosidade</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;">
+              <span style="font-size:20px;" aria-hidden="true">💡</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">LED</div>
+                <div style="font-size:12px;color:var(--text-muted);">Indicador de acionamento</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vídeo -->
+      <div class="reveal mb-12">
+        <div class="section-label mb-12">Vídeo</div>
+      </div>
+      <div class="video-container reveal reveal-delay-1">
+        <video
+          id="video1"
+          controls
+          preload="metadata"
+          aria-label="Demonstração do Desafio 01 — Iluminação Inteligente"
+        >
+          <source src="../gravacoes/video1.mp4" type="video/mp4" />
+          <p style="padding:20px;color:var(--text-muted);">
+            Seu navegador não suporta vídeo HTML5.
+            <a href="../gravacoes/video1.mp4" style="color:var(--blue-light);">Baixar vídeo</a>.
+          </p>
+        </video>
+        <div class="video-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+          </svg>
+          ../gravacoes/video1.mp4
+        </div>
+      </div>
+
+      <!-- Código -->
+      <div class="reveal mb-12">
+        <div class="section-label mb-12">Código</div>
+      </div>
+      <div class="code-panel reveal reveal-delay-1" id="code-panel-1" role="region" aria-label="Código do Desafio 01">
+        <div class="code-header">
+          <div class="code-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="code-filename">desafio1.ino</div>
+          <button class="btn-copy" id="btn-copy-1" data-target="code-body-1" aria-label="Copiar código do Desafio 01">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+            Copiar
+          </button>
+        </div>
+        <div class="code-body" id="code-body-1">
+          <div class="code-placeholder">
+            &#8987; O código final do Desafio 01 será inserido aqui.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider" role="separator"></div>
+
+
+  <!-- =============================================
+       DESAFIO 02 — DISTÂNCIA E ILUMINAÇÃO
+       ============================================= -->
+  <section id="desafio2" aria-labelledby="d2-title">
+    <div class="container">
+
+      <div class="challenge-header reveal">
+        <div class="challenge-num" aria-hidden="true">02</div>
+        <div class="challenge-meta">
+          <div class="section-label">Desafio 02</div>
+          <h2 class="section-title" id="d2-title">Distância e Iluminação</h2>
+          <p class="section-desc">
+            O sensor ultrassônico realiza a medição da distância, enquanto o potenciômetro permite
+            alterar o limite utilizado pelo programa para determinar o comportamento do LED.
+          </p>
+        </div>
+      </div>
+
+      <div class="challenge-grid mb-28">
+
+        <!-- Indicadores -->
+        <div class="reveal reveal-delay-1">
+          <div class="section-label mb-12">Indicadores</div>
+          <div class="meter-group">
+            <div class="meter-item">
+              <div class="meter-label-row">
+                <span class="meter-name">Distância</span>
+                <span class="meter-val">— cm</span>
+              </div>
+              <div class="meter-track" role="progressbar" aria-label="Indicador de distância" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="meter-fill" data-width="75%"></div>
+              </div>
+            </div>
+            <div class="meter-item">
+              <div class="meter-label-row">
+                <span class="meter-name">Limite</span>
+                <span class="meter-val">— cm</span>
+              </div>
+              <div class="meter-track" role="progressbar" aria-label="Indicador de limite" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                <div class="meter-fill yellow" data-width="50%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Componentes -->
+        <div class="reveal reveal-delay-2">
+          <div class="section-label mb-12">Componentes</div>
+          <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+              <span style="font-size:20px;" aria-hidden="true">📏</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">Sensor Ultrassônico</div>
+                <div style="font-size:12px;color:var(--text-muted);">Medição de distância</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+              <span style="font-size:20px;" aria-hidden="true">🎛️</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">Potenciômetro</div>
+                <div style="font-size:12px;color:var(--text-muted);">Ajuste do limite</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;">
+              <span style="font-size:20px;" aria-hidden="true">💡</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">LED</div>
+                <div style="font-size:12px;color:var(--text-muted);">Indicador de acionamento</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lógica -->
+      <div class="reveal mb-12">
+        <div class="section-label mb-12">Lógica</div>
+      </div>
+      <div class="logic-flow reveal reveal-delay-1" role="img" aria-label="Fluxo lógico: medir, comparar, decidir, acionar LED">
+        <div class="logic-step">
+          <div class="logic-icon" aria-hidden="true">📏</div>
+          <div class="logic-text">Medir</div>
+        </div>
+        <div class="logic-arrow" aria-hidden="true">→</div>
+        <div class="logic-step">
+          <div class="logic-icon" aria-hidden="true">⚖️</div>
+          <div class="logic-text">Comparar</div>
+        </div>
+        <div class="logic-arrow" aria-hidden="true">→</div>
+        <div class="logic-step">
+          <div class="logic-icon" aria-hidden="true">💭</div>
+          <div class="logic-text">Decidir</div>
+        </div>
+        <div class="logic-arrow" aria-hidden="true">→</div>
+        <div class="logic-step">
+          <div class="logic-icon" aria-hidden="true">💡</div>
+          <div class="logic-text">Acionar LED</div>
+        </div>
+      </div>
+
+      <div class="mb-28"></div>
+
+      <!-- Vídeo -->
+      <div class="reveal mb-12">
+        <div class="section-label mb-12">Vídeo</div>
+      </div>
+      <div class="video-container reveal reveal-delay-1">
+        <video
+          id="video2"
+          controls
+          preload="metadata"
+          aria-label="Demonstração do Desafio 02 — Distância e Iluminação"
+        >
+          <source src="../gravacoes/video2.mp4" type="video/mp4" />
+          <p style="padding:20px;color:var(--text-muted);">
+            Seu navegador não suporta vídeo HTML5.
+            <a href="../gravacoes/video2.mp4" style="color:var(--blue-light);">Baixar vídeo</a>.
+          </p>
+        </video>
+        <div class="video-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+          </svg>
+          ../gravacoes/video2.mp4
+        </div>
+      </div>
+
+      <!-- Código -->
+      <div class="reveal mb-12">
+        <div class="section-label mb-12">Código</div>
+      </div>
+      <div class="code-panel reveal reveal-delay-1" id="code-panel-2" role="region" aria-label="Código do Desafio 02">
+        <div class="code-header">
+          <div class="code-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="code-filename">desafio2.ino</div>
+          <button class="btn-copy" id="btn-copy-2" data-target="code-body-2" aria-label="Copiar código do Desafio 02">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+            Copiar
+          </button>
+        </div>
+        <div class="code-body" id="code-body-2">
+          <div class="code-placeholder">
+            &#8987; O código final do Desafio 02 será inserido aqui.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider" role="separator"></div>
+
+
+  <!-- =============================================
+       DESAFIO 03 — AMBIENTE INTELIGENTE
+       ============================================= -->
+  <section id="desafio3" aria-labelledby="d3-title">
+    <div class="container">
+
+      <div class="challenge-header reveal">
+        <div class="challenge-num" aria-hidden="true">03</div>
+        <div class="challenge-meta">
+          <div class="section-label">Desafio 03</div>
+          <h2 class="section-title" id="d3-title">Ambiente Inteligente</h2>
+          <p class="section-desc">
+            O sistema monitora temperatura e umidade e utiliza LEDs para indicar visualmente
+            as condições identificadas.
+          </p>
+        </div>
+      </div>
+
+      <div class="challenge-grid mb-28">
+
+        <!-- Painel de status -->
+        <div class="reveal reveal-delay-1">
+          <div class="section-label mb-12">Painel de Status</div>
+          <div class="monitor-panel" role="status" aria-label="Painel de monitoramento do ambiente">
+            <div class="monitor-header">Monitor em tempo real</div>
+            <div class="monitor-body">
+              <div class="monitor-row">
+                <span class="monitor-key">Temperatura</span>
+                <span class="monitor-value">
+                  <span class="indicator green" aria-label="Normal"></span>
+                  Normal
+                </span>
+              </div>
+              <div class="monitor-row">
+                <span class="monitor-key">Umidade</span>
+                <span class="monitor-value">
+                  <span class="indicator green" aria-label="Normal"></span>
+                  Normal
+                </span>
+              </div>
+              <div class="monitor-row">
+                <span class="monitor-key">Status</span>
+                <span class="monitor-value">
+                  <span class="indicator green" aria-label="Monitorando"></span>
+                  Monitorando
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Componentes -->
+        <div class="reveal reveal-delay-2">
+          <div class="section-label mb-12">Componentes</div>
+          <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+              <span style="font-size:20px;" aria-hidden="true">🌡️</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">Sensor DHT</div>
+                <div style="font-size:12px;color:var(--text-muted);">Temperatura e umidade</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+              <span style="font-size:20px;" aria-hidden="true">🔴</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">LED Vermelho</div>
+                <div style="font-size:12px;color:var(--text-muted);">Alerta de temperatura</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+              <span style="font-size:20px;" aria-hidden="true">🟡</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">LED Amarelo</div>
+                <div style="font-size:12px;color:var(--text-muted);">Alerta de umidade</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;">
+              <span style="font-size:20px;" aria-hidden="true">🟢</span>
+              <div>
+                <div style="font-size:13px;font-weight:600;">LED Verde</div>
+                <div style="font-size:12px;color:var(--text-muted);">Condições normais</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Condições possíveis -->
+      <div class="reveal mb-12">
+        <div class="section-label mb-12">Condições Possíveis</div>
+      </div>
+      <div class="conditions-grid reveal reveal-delay-1">
+
+        <div class="condition-card">
+          <span class="condition-badge green">✓ Adequado</span>
+          <div class="condition-title">Condições adequadas</div>
+          <div class="condition-desc">
+            Temperatura e umidade dentro dos parâmetros normais. LED verde ativado.
+          </div>
+        </div>
+
+        <div class="condition-card">
+          <span class="condition-badge red">&#9888; Temperatura</span>
+          <div class="condition-title">Temperatura elevada</div>
+          <div class="condition-desc">
+            Temperatura acima do limite definido. LED vermelho ativado como alerta.
+          </div>
+        </div>
+
+        <div class="condition-card">
+          <span class="condition-badge yellow">&#9888; Umidade</span>
+          <div class="condition-title">Umidade baixa</div>
+          <div class="condition-desc">
+            Umidade abaixo do parâmetro mínimo. LED amarelo ativado como alerta.
+          </div>
+        </div>
+
+        <div class="condition-card">
+          <span class="condition-badge red">&#9888;&#9888; Crítico</span>
+          <div class="condition-title">Temp. elevada + Umidade baixa</div>
+          <div class="condition-desc">
+            Ambas as condições fora do normal. LEDs vermelho e amarelo ativados simultaneamente.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mb-28"></div>
+
+      <!-- Vídeo -->
+      <div class="reveal mb-12">
+        <div class="section-label mb-12">Vídeo</div>
+      </div>
+      <div class="video-container reveal reveal-delay-1">
+        <video
+          id="video3"
+          controls
+          preload="metadata"
+          aria-label="Demonstração do Desafio 03 — Ambiente Inteligente"
+        >
+          <source src="../gravacoes/video3.mp4" type="video/mp4" />
+          <p style="padding:20px;color:var(--text-muted);">
+            Seu navegador não suporta vídeo HTML5.
+            <a href="../gravacoes/video3.mp4" style="color:var(--blue-light);">Baixar vídeo</a>.
+          </p>
+        </video>
+        <div class="video-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+          </svg>
+          ../gravacoes/video3.mp4
+        </div>
+      </div>
+
+      <!-- Código -->
+      <div class="reveal mb-12">
+        <div class="section-label mb-12">Código</div>
+      </div>
+      <div class="code-panel reveal reveal-delay-1" id="code-panel-3" role="region" aria-label="Código do Desafio 03">
+        <div class="code-header">
+          <div class="code-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="code-filename">desafio3.ino</div>
+          <button class="btn-copy" id="btn-copy-3" data-target="code-body-3" aria-label="Copiar código do Desafio 03">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+            Copiar
+          </button>
+        </div>
+        <div class="code-body" id="code-body-3">
+          <div class="code-placeholder">
+            &#8987; O código final do Desafio 03 será inserido aqui.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider" role="separator"></div>
+
+
+  <!-- =============================================
+       VISÃO GERAL
+       ============================================= -->
+  <section id="visao-geral" aria-labelledby="overview-title">
+    <div class="container">
+
+      <div class="reveal">
+        <div class="section-label">Resultados</div>
+        <h2 class="section-title" id="overview-title">Visão Geral</h2>
+        <p class="section-desc mb-40">
+          A atividade integrou sensores físicos, lógica de programação e automação em três experimentos progressivos.
+        </p>
+      </div>
+
+      <!-- Track dos desafios -->
+      <div class="overview-track reveal" role="list" aria-label="Sequência dos desafios">
+
+        <a href="#desafio1" class="overview-node" role="listitem" style="text-decoration:none;">
+          <div class="overview-num">01</div>
+          <div class="overview-name">Iluminação</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">PIR + LDR + LED</div>
+        </a>
+
+        <div class="overview-arrow" aria-hidden="true">→</div>
+
+        <a href="#desafio2" class="overview-node" role="listitem" style="text-decoration:none;">
+          <div class="overview-num">02</div>
+          <div class="overview-name">Distância</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Ultrassônico + Pot.</div>
+        </a>
+
+        <div class="overview-arrow" aria-hidden="true">→</div>
+
+        <a href="#desafio3" class="overview-node" role="listitem" style="text-decoration:none;">
+          <div class="overview-num">03</div>
+          <div class="overview-name">Ambiente</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">DHT + LEDs</div>
+        </a>
+
+      </div>
+
+      <!-- Card de resumo -->
+      <div class="card reveal reveal-delay-1">
+        <div class="section-label mb-16">O que foi trabalhado</div>
+        <p style="font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:20px;">
+          A atividade permitiu explorar na prática o uso de sensores, a programação do Arduino,
+          a aplicação de condições lógicas para tomada de decisão, o controle de LEDs como
+          indicadores visuais e os fundamentos da automação.
+        </p>
+        <div class="tags-row" role="list" aria-label="Tópicos abordados">
+          <span class="tag" role="listitem">Sensores</span>
+          <span class="tag" role="listitem">Arduino</span>
+          <span class="tag" role="listitem">Programação</span>
+          <span class="tag" role="listitem">Condições Lógicas</span>
+          <span class="tag" role="listitem">LEDs</span>
+          <span class="tag" role="listitem">Automação</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       FOOTER
+       ============================================= -->
+  <footer role="contentinfo">
+    <p>
+      Centro de Controle <span>Arduino</span> —
+      Atividade prática com sensores, lógica e automação.
+    </p>
+  </footer>
+
+
+  <script src="js/script.js"></script>
+</body>
+</html>
